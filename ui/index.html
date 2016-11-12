@@ -1,18 +1,87 @@
-<!doctype html>
-<html>
-    <head>
-        <link href="/ui/style.css" rel="stylesheet" />
-    </head>
-    <body>
-        <div class="center">
-            <img src="/ui/madi.png" class="img-medium"/>
-        </div>
-        <br>
-        <div class="center text-big bold">
-            Hi!You are watching imad tutorial
-            <h2>Adding a heading</h2>
-        </div>
-        <script type="text/javascript" src="/ui/main.js">
-        </script>
-    </body>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <style>
+        .name_card {
+            background-color: #78909C;
+            height: 180px;
+        }
+
+        .about_me {
+            background-image: url('bg.jpg');
+            height: 300px;
+        }
+
+        .side_nav {
+            background-color: #CFD8DC;
+        }
+    </style>
+</head>
+
+<body ng-app="MyApp">
+    <div layout="column" flex style="height:100%" ng-controller="MainController">
+        <section layout="row" flex>
+            <md-sidenav class="md-sidenav-left side_nav" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
+                <div layout="column" layout-align="center center" class="name_card">
+                    <p style="color:#fff">
+                        Swathi Pradeep
+                    </p>
+                    <span style="color:#fff">swathipradeep369@gmail.com</span>
+                </div>
+                <md-content class="side_nav" layout-padding>
+                    <md-button class="md-primary" ui-sref="home">About Me</md-button>
+                    <md-button class="md-primary" ng-click="readArticle()">Read</md-button>
+                    <md-list-item ng-repeat="article in articles">
+                        <a ui-sref="{{article.url}}"> {{ article.name }} </a>
+                        <!-- <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox> -->
+                    </md-list-item>
+                </md-content>
+
+            </md-sidenav>
+            <div layout="column" flex>
+                <div class="" ng-controller="UserController">
+                    <md-toolbar>
+                        <div class="md-toolbar-tools">
+                            <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                                <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
+                            </md-button>
+                            <h2>
+                              <span>Toolbar with Disabled/Enabled Icon Buttons</span>
+                            </h2>
+                            <span flex></span>
+                            <md-button class="md-icon-button" aria-label="Favorite">
+                                <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+                            </md-button>
+                            <md-button class="md-icon-button" aria-label="Login" ng-click="showTabDialog($event)">
+                                <md-icon md-svg-icon="images/icons/ic_person_pin_white_24px.svg">Login</md-icon>
+                            </md-button>
+                        </div>
+                    </md-toolbar>
+                </div>
+                <div layout="row" ui-view flex>
+
+                </div>
+            </div>
+
+        </section>
+    </div>
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/main_controller.js"></script>
+    <script src="js/user_controller.js"></script>
+
+</body>
+
 </html>

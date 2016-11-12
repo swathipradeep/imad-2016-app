@@ -1,0 +1,47 @@
+<md-dialog aria-label="User registration and login">
+    <!-- <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Mango (Fruit)</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar> -->
+    <md-dialog-content style="max-width:800px;max-height:910px; ">
+      <md-tabs md-dynamic-height md-border-bottom md-stretch-tabs="always" flex>
+        <md-tab label="Login">
+          <md-content class="md-padding" layout="column">
+            <h4 class="md-display-6">Use your email and password to login.</h4>
+            <md-input-container>
+              <label for="email">Email</label>
+              <input type="text" ng-model="user.email" name="email" value="">
+            </md-input-container>
+            <md-input-container>
+              <label for="Password">Password</label>
+              <input type="password" ng-model="user.password" name="password" value="">
+            </md-input-container>
+            <md-button class="md-raised md-primary">Login</md-button>
+          </md-content>
+        </md-tab>
+        <md-tab label="Register">
+
+          <md-content class="md-padding" style="width:300px" layout="column">
+            <md-input-container>
+              <label for="name">Firstname</label>
+              <input type="text" ng-model="user.name" name="name" value="">
+            </md-input-container>
+            <md-input-container>
+              <label for="email">Email</label>
+              <input type="text" ng-model="user.email" name="email" value="">
+            </md-input-container>
+            <md-input-container>
+              <label for="Password">Password</label>
+              <input type="password" ng-model="user.password" name="password" value="">
+            </md-input-container>
+            <md-button class="md-raised md-primary">Register</md-button>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </md-dialog-content>
+</md-dialog>

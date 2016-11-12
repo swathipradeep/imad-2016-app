@@ -1,0 +1,15 @@
+app.config(function($stateProvider,$urlRouterProvider){
+  $urlRouterProvider.otherwise('home');
+  $stateProvider.state('home',{
+    url:'/home',
+    templateUrl:'templates/home.html'
+  }).
+  state('articleOne',{
+    url:'/article-one',
+    templateUrl:'templates/article.html'
+  }).
+  state('readArticle',{
+    url:'/readarticle',
+    templateUrl:'templates/readarticle.html'
+  });
+});

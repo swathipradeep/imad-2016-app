@@ -1,9 +1,22 @@
-body {
-    font-family: sans-serif;
-    background-color: lightgrey;
-    margin-top: 75px;
-}
+header, main, footer {
+      padding-left: 300px;
+    }
 
+    @media only screen and (max-width : 992px) {
+      header, main, footer {
+        padding-left: 0;
+      }
+    }
+body {
+  /* font-family: sans-serif;
+    background-color: lightgrey;
+    margin-top: 75px;*/
+     /*background-image:url("/ui/bg.jpg");*/
+     background-color: #fff;
+}
+#slide-out{
+  background-color: #eceff;
+}
 .center {
     text-align: center;
 }
@@ -18,5 +31,29 @@ body {
 
 .img-medium {
     height: 200px;
-}
-
+  }
+    .img-circle{
+       border-radius: 75%;
+       margin-left: auto;
+       margin-right: auto;
+       width: 220px;
+       height: auto;
+    }
+    .fig{
+          padding-top: 10px;
+          font-family: sans-serif;
+        font-size: 150%;
+          font-style: italic;
+          color:white;
+          font-weight: bold;
+    }
+    table{
+      margin: 0px auto;
+      margin-left: auto;
+      margin-right: auto;
+      text-align:justify;
+      color: white;
+      font-size: 125%;
+      line-height:30px;
+      font-family: cursive;
+    }
