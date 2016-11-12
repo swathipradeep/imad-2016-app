@@ -1,13 +1,21 @@
 app.controller('UserController',['$scope','$mdDialog','$http',function($scope,$mdDialog,$http){
   //User login function
-  $scope.login = function()
+  $scope.login = function(user)
   {
-
+    $http.post('/api/v1/login',JSON.stringify(user)).then(function success(data){
+      console.log(data);
+    },function error(data){
+      console.log(data);
+    });
   }
   //User registration function
-  $scope.login = function()
+  $scope.register = function(user)
   {
-
+    $http.post('/api/v1/register',JSON.stringify(user)).then(function success(data){
+      console.log(data);
+    },function error(data){
+      console.log(data);
+    });
   }
   //Tab dialog open for login and registration
   $scope.showTabDialog = function(ev) {

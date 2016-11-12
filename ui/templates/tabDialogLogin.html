@@ -1,4 +1,4 @@
-<md-dialog aria-label="User registration and login">
+<md-dialog aria-label="User registration and login" ng-controller="UserController">
     <!-- <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>Mango (Fruit)</h2>
@@ -21,7 +21,7 @@
               <label for="Password">Password</label>
               <input type="password" ng-model="user.password" name="password" value="">
             </md-input-container>
-            <md-button class="md-raised md-primary">Login</md-button>
+            <md-button class="md-raised md-primary" ng-click="login(user)">Login</md-button>
           </md-content>
         </md-tab>
         <md-tab label="Register">
@@ -39,7 +39,7 @@
               <label for="Password">Password</label>
               <input type="password" ng-model="user.password" name="password" value="">
             </md-input-container>
-            <md-button class="md-raised md-primary">Register</md-button>
+            <md-button class="md-raised md-primary" ng-click="register(user)">Register</md-button>
           </md-content>
         </md-tab>
       </md-tabs>
