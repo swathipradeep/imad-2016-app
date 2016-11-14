@@ -1,4 +1,4 @@
-app.controller('UserController',['$scope','$mdDialog','$http','$cookies',function($scope,$mdDialog,$http,$cookies){
+app.controller('UserController',['$scope','$mdDialog','$http','$cookies','$state',function($scope,$mdDialog,$http,$cookie,$state){
   //User login function
   $scope.login = function(user)
   {
@@ -33,4 +33,8 @@ app.controller('UserController',['$scope','$mdDialog','$http','$cookies',functio
           $scope.status = 'You cancelled the dialog.';
         });
   };
+  $scope.gotoHome = function()
+  {
+    $state.go('home');
+  }
 }]);

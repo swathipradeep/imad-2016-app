@@ -1,1 +1,18 @@
-<h2>Welcome</h2>
+<md-content>
+<p>
+  Title: {{title}}
+</p>
+<p>
+  {{content}}
+</p>
+<p>
+  <ul>
+    <li ng-repeat="cmt in commentList">{{cmt.comment}}</li>
+  </ul>
+</p>
+<md-input-container>
+  <label>Add comment</label>
+  <input type="text" ng-model="comment" value="">
+</md-input-container>
+<md-button ng-click="addComment()">Submit</md-button>
+</md-content>

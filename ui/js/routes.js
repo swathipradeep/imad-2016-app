@@ -9,7 +9,13 @@ app.config(function($stateProvider,$urlRouterProvider){
     templateUrl:'templates/article.html'
   }).
   state('readArticle',{
-    url:'/readarticle',
-    templateUrl:'templates/readarticle.html'
+    url:'/readarticle?id',
+    templateUrl:'templates/readarticle.html',
+    controller:'ArticleController'
+  }).
+  state('newArticle',{
+    url:'/new_article',
+    templateUrl:'templates/newArticle.html',
+    controller:'ArticleController'
   });
 });

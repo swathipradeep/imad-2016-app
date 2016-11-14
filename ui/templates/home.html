@@ -1,7 +1,7 @@
 <md-content class="" flex>
-  <div layout="column" layout-align="center center">
+  <div layout="column" layout-align="center center" ng-controller="ArticleController">
     <md-list-item ng-repeat="article in articles">
-        <a> {{ article.title }} </a>
+        <a ui-sref="readArticle({id:article.article_id})"> {{ article.title }} </a>
         <!-- <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox> -->
     </md-list-item>
   </div>

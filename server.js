@@ -82,8 +82,27 @@ app.post('/api/v1/register',function(req,res){
 });
 //Article API's
 app.get('/api/v1/article/:id',function(req,res){
+  var id= req.params.id;
+  pool.query("select * from testapp.article where article_id=$1",[id],function(err,result){
+    if(err){
+      response.statusCode = "400";
+      response.message = "failed";
+      response.data = {"message":"Something went wrong please try again."}
+      res.send(JSON.stringify(response));
+    }else{
+      pool.query("select * from testapp.comments where article_id=$1",[id],function(err,re){
+        if(err){
 
-  res.send("Hello");
+        }else{
+          response.statusCode = "200";
+          response.message = "success";
+          response.data = {"articles":result.rows,"comments":re.rows}
+          res.send(JSON.stringify(response));
+        }
+      });
+
+    }
+  });
 
 });
 app.get('/api/v1/article',function(req,res){
@@ -103,8 +122,23 @@ app.get('/api/v1/article',function(req,res){
   });
 
 });
-app.post('/api/v1/article/comment/:id',function(req,res){
-
+app.post('/api/v1/article/comment',function(req,res){
+  let comment= req.body.comment;
+  let a_id = req.body.article_id;
+  pool.query("insert into testapp.comments values($1,$2,$3)",[,comment,a_id],function(err,result){
+    if(err){
+      console.log(err);
+      response.statusCode = "400";
+      response.message = "failed";
+      response.data = {"message":"Something went wrong please try again."}
+      res.send(JSON.stringify(response));
+    }else{
+      response.statusCode = "200";
+      response.message = "success";
+      response.data = {"comment":result}
+      res.send(JSON.stringify(response));
+    }
+  })
 });
 app.post('/api/v1/article',function(req,res){
   //console.log(req.headers);
