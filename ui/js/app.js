@@ -1,1 +1,1 @@
-var app = angular.module('MyApp',['ngMaterial','ui.router']);
+var app = angular.module('MyApp',['ngMaterial','ui.router','ngCookies']);

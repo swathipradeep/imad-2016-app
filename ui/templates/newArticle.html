@@ -1,0 +1,26 @@
+<md-dialog aria-label="User registration and login" ng-controller="MainController" layout="column" flex>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>New Article</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content flex>
+        <div class="md-dialog-content" layout="column" flex>
+            <md-input-container>
+                <label for="">Article title</label>
+                <input type="text" name="name" ng-model="article.title" value="">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Biography</label>
+                <textarea ng-model="article.content" rows="5" md-select-on-focus></textarea>
+            </md-input-container>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button class="md-primary md-raised" ng-click="saveArticle(article)">Save</md-button>
+    </md-dialog-actions>
+</md-dialog>

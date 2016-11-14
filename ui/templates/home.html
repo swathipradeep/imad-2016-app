@@ -1,5 +1,8 @@
-<md-content class="about_me" flex>
+<md-content class="" flex>
   <div layout="column" layout-align="center center">
-    <h1>Welcome</h1>
+    <md-list-item ng-repeat="article in articles">
+        <a> {{ article.title }} </a>
+        <!-- <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox> -->
+    </md-list-item>
   </div>
 </md-content>

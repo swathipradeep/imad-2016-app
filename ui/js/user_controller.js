@@ -1,9 +1,11 @@
-app.controller('UserController',['$scope','$mdDialog','$http',function($scope,$mdDialog,$http){
+app.controller('UserController',['$scope','$mdDialog','$http','$cookies',function($scope,$mdDialog,$http,$cookies){
   //User login function
   $scope.login = function(user)
   {
     $http.post('/api/v1/login',JSON.stringify(user)).then(function success(data){
-      console.log(data);
+
+      $cookies.put('token',data.data.data.token);
+      console.log(data.data.data.token);
     },function error(data){
       console.log(data);
     });
