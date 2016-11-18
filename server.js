@@ -4,8 +4,11 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var Pool =  require('pg').Pool;
 var jwt = require('jsonwebtoken');
+var cookieParser = require('cookie-parser')
+var moment = require('moment');
 
 var app = express();
+app.use(cookieParser())
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 
@@ -40,15 +43,12 @@ app.post('/api/v1/login',function(req,res){
       }
       res.send(JSON.stringify(response));
     }else{
-      console.log(result.rows[0].email);
       if(result.rows[0].password == password){
         //JWT implementation
         console.log(result.rows[0]);
         var token = jwt.sign(result.rows[0],appSecret, {
             expiresIn : 1440 // expires in 24 hours
         });
-        verifyToken(token);
-        console.log(token);
         response.statusCode = "200";
         response.message = "success";
         response.data = {"login":true,'token':token}
@@ -80,6 +80,22 @@ app.post('/api/v1/register',function(req,res){
     }
   });
 });
+app.get('/api/v1/article',function(req,res){
+  pool.query("select * from testapp.article",function(err,result){
+    if(err){
+      response.statusCode = "400";
+      response.message = "failed";
+      response.data = {"message":"Something went wrong please try again."}
+      res.send(JSON.stringify(response));
+    }else{
+      response.statusCode = "200";
+      response.message = "success";
+      response.data = {"articles":result.rows}
+      res.send(JSON.stringify(response));
+    }
+  });
+
+});
 //Article API's
 app.get('/api/v1/article/:id',function(req,res){
   var id= req.params.id;
@@ -105,22 +121,35 @@ app.get('/api/v1/article/:id',function(req,res){
   });
 
 });
-app.get('/api/v1/article',function(req,res){
-
-  pool.query("select * from testapp.article",function(err,result){
-    if(err){
-      response.statusCode = "400";
-      response.message = "failed";
-      response.data = {"message":"Something went wrong please try again."}
-      res.send(JSON.stringify(response));
-    }else{
-      response.statusCode = "200";
-      response.message = "success";
-      response.data = {"articles":result.rows}
-      res.send(JSON.stringify(response));
-    }
-  });
-
+app.use(function verifyToken(req,res,next)
+{
+  let token = req.cookies['token'];
+  jwt.verify(token, appSecret, function(err, decoded) {
+     if (err) {
+       response.statusCode = "400";
+       response.message = "failed to authenticate";
+       response.data = {"loggedin":false}
+       res.send(JSON.stringify(response));
+     } else {
+       // if everything is good, save to request for use in other routes
+       var decoded_token = decoded;
+       req.body.email = decoded_token.email
+       next();
+     }
+   });
+});
+app.get('/api/v1/verifyuser',function(req,res){
+  if(req.body.email){
+    response.statusCode = "200";
+    response.message = "success";
+    response.data = {"loggedin":true}
+    res.send(JSON.stringify(response));
+  }else{
+    response.statusCode = "200";
+    response.message = "success";
+    response.data = {"loggedin":false}
+    res.send(JSON.stringify(response));
+  }
 });
 app.post('/api/v1/article/comment',function(req,res){
   let comment= req.body.comment;
@@ -141,19 +170,25 @@ app.post('/api/v1/article/comment',function(req,res){
   })
 });
 app.post('/api/v1/article',function(req,res){
-  //console.log(req.headers);
+  let email = req.body.email;
   let title = req.body.title;
   let content = req.body.content;
-  console.log(title);
-  pool.query("insert into testapp.article values($1,$2,$3)",[1,title,content],function(err,result){
+  console.log(moment().format("MMM Do YY"));
+  pool.query("insert into testapp.article values($1,$2,$3,$4,$5)",[1,title,content,email,moment().format("MMM Do YY")],function(err,result){
     if(err){
-      res.send(err);
+      response.statusCode = "400";
+      response.message = "failed";
+      response.data = {"message":"Something went wrong please try again."}
+      res.send(JSON.stringify(response));
     }else{
-      res.send("Hello");
+      response.statusCode = "200";
+      response.message = "success";
+      response.data = {"article":"saved"}
+      res.send(JSON.stringify(response));
     }
   })
-
 });
+
 app.get('/api/v1/aboutme',function(req,res){
 
 });
@@ -161,17 +196,3 @@ var port = 8080; // Use 8080 for local development because you might already hav
 app.listen(8080, function () {
   console.log(`IMAD course app listening on port ${port}!`);
 });
-function verifyToken(token)
-{
-  jwt.verify(token, appSecret, function(err, decoded) {
-     if (err) {
-       return res.json({ success: false, message: 'Failed to authenticate token.' });
-     } else {
-       // if everything is good, save to request for use in other routes
-       var decoded_token = decoded;
-       console.log("Decoded token");
-       console.log(decoded_token);
-       //next();
-     }
-   });
-}

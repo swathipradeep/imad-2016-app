@@ -1,15 +1,23 @@
-app.controller('UserController',['$scope','$mdDialog','$http','$cookies','$state',function($scope,$mdDialog,$http,$cookie,$state){
+app.controller('UserController',['$scope','$mdDialog','$http','$cookies','$state',function($scope,$mdDialog,$http,$cookies,$state){
   //User login function
+  $scope.logout = function()
+  {
+    $cookies.remove('token');
+    $scope.isloggedin = false;
+  }
   $scope.login = function(user)
   {
     $http.post('/api/v1/login',JSON.stringify(user)).then(function success(data){
 
       $cookies.put('token',data.data.data.token);
-      console.log(data.data.data.token);
+      $scope.isloggedin = true;
+      //$mdDialog.cancel();
     },function error(data){
       console.log(data);
     });
+
   }
+
   //User registration function
   $scope.register = function(user)
   {
@@ -27,11 +35,6 @@ app.controller('UserController',['$scope','$mdDialog','$http','$cookies','$state
       targetEvent: ev,
       clickOutsideToClose:true
     })
-        .then(function(answer) {
-          $scope.status = 'You said the information was "' + answer + '".';
-        }, function() {
-          $scope.status = 'You cancelled the dialog.';
-        });
   };
   $scope.gotoHome = function()
   {

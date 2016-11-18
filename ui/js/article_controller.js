@@ -1,15 +1,16 @@
-app.controller('ArticleController',['$scope','$http','$mdDialog','$state','$stateParams',function($scope,$http,$mdDialog,$state,$stateParams){
+app.controller('ArticleController',['$scope','$http','$mdDialog','$state','$stateParams','AppServices',function($scope,$http,$mdDialog,$state,$stateParams,AppServices){
   $scope.name= [];
-  console.log($scope);
   $scope.articles = [];
   $scope.commentList = [];
+  AppServices.isLoggedIn().then(function scb(data){
+    $scope.isloggedin = data.data.data.loggedin;
+  },function ecb(data){
+
+  });
   $scope.loaddata = function()
   {
     $http.get("/api/v1/article").then(function success(data){
       $scope.articles = data.data.data.articles;
-      $scope.name.push("Hello");
-      console.log($scope);
-      console.log($scope.name);
     }, function error(){
 
     });
@@ -23,7 +24,6 @@ app.controller('ArticleController',['$scope','$http','$mdDialog','$state','$stat
     $scope.a_id = $stateParams.id;
     $http.get("/api/v1/article/"+$scope.a_id).then(function success(data){
       $scope.result = data.data.data.articles[0];
-      console.log($scope.result);
       $scope.commentList = data.data.data.comments;
       $scope.title = $scope.result.title;
       $scope.content = $scope.result.content;

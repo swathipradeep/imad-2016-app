@@ -1,18 +1,24 @@
-<md-content>
-<p>
-  Title: {{title}}
-</p>
-<p>
+<md-content flex>
+<md-card class="page" layout-padding>
+  <h4>
+    {{title}}
+  </h4>
   {{content}}
-</p>
-<p>
+</md-card>
+<md-card>
+  <md-card-titile>
+    <h5>Comments</h5>
+  </md-card-title>
   <ul>
     <li ng-repeat="cmt in commentList">{{cmt.comment}}</li>
   </ul>
-</p>
 <md-input-container>
   <label>Add comment</label>
   <input type="text" ng-model="comment" value="">
 </md-input-container>
-<md-button ng-click="addComment()">Submit</md-button>
+<md-button class="md-primary md-raised" ng-click="addComment()">Submit</md-button>
+<p ng-hide="isloggedin">
+  Please login to comment
+</p>
+</md-card>
 </md-content>

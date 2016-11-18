@@ -22,7 +22,7 @@
 </head>
 
 <body ng-app="MyApp">
-    <div layout="column" flex style="height:100%"  ng-controller="MainController">
+    <div layout="column" flex style="height:99%"  ng-controller="MainController">
         <section layout="row" flex>
             <md-sidenav class="md-sidenav-left side_nav" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
                 <div layout="column" layout-align="center center" class="name_card">
@@ -53,7 +53,11 @@
                             <md-button class="md-icon-button" aria-label="Favorite">
                                 <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
                             </md-button> -->
-                            <md-button class="md-icon-button" aria-label="Login" ng-click="showTabDialog($event)">
+                            <md-button ng-show="isloggedin" class="md-icon-button" aria-label="Login" ng-click="logout()">
+                                <md-icon md-svg-icon="images/icons/ic_exit_to_app_white_24px.svg">Logout</md-icon>
+                            </md-button>
+                            {{isloggedin}}
+                            <md-button ng-hide="isloggedin" class="md-icon-button" aria-label="Login" ng-click="showTabDialog($event)">
                                 <md-icon md-svg-icon="images/icons/ic_person_pin_white_24px.svg">Login</md-icon>
                             </md-button>
                         </div>
@@ -63,7 +67,7 @@
 
                 </div>
                 <div layout="row" layout-align="end center" ng-controller="ArticleController">
-                    <md-fab-speed-dial md-open="demo.isOpen">
+                    <md-fab-speed-dial>
                         <md-fab-trigger>
                             <md-button ng-click="newArticle()" aria-label="menu" class="md-fab md-warn">
                                 <md-icon md-svg-src="images/icons/ic_add_white_24px.svg"></md-icon>
@@ -102,6 +106,7 @@
     <script src="js/main_controller.js"></script>
     <script src="js/user_controller.js"></script>
     <script src="js/article_controller.js"></script>
+    <script src="js/AppServices.js"></script>
 
 </body>
 
