@@ -1,14 +1,19 @@
-app.controller('MainController',['$scope','$http','$mdDialog','$state','AppServices',function($scope,$http,$mdDialog,$state,AppServices){
+app.controller('MainController',['$scope','$http','$mdDialog','$state','AppServices','$rootScope','$mdSidenav',function($scope,$http,$mdDialog,$state,AppServices,$rootScope,$mdSidenav){
   //console.log(AppServices.loggedin);
-  $scope.isloggedin = AppServices.isLoggedIn().then(function scb(data){
-    $scope.isloggedin = data.data.data.loggedin;
-  },function ecb(data){
-
-  });
+  $rootScope.showLinear = false;
+  $scope.openSideNavigation = function()
+  {
+    $mdSidenav('left').open()
+    .then(function(){
+    });
+  }
+  $scope.loggedIn = function()
+  {
+    return AppServices.isLoggedIn();
+  }
   $scope.readArticle = function()
   {
     $http.get("/api/v1/article/1").then(function success(data){
-      console.log(data);
     }, function error(){
 
     });
@@ -17,4 +22,13 @@ app.controller('MainController',['$scope','$http','$mdDialog','$state','AppServi
   {
 
   }
+  //Tab dialog open for login and registration
+  $scope.showTabDialog = function(ev) {
+    $mdDialog.show({
+      templateUrl: 'templates/tabDialogLogin.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose:true
+    })
+  };
 }]);

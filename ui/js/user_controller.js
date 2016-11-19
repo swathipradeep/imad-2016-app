@@ -1,5 +1,7 @@
-app.controller('UserController',['$scope','$mdDialog','$http','$cookies','$state',function($scope,$mdDialog,$http,$cookies,$state){
+app.controller('UserController',['$scope','$mdDialog','$http','$cookies','$state','$rootScope',function($scope,$mdDialog,$http,$cookies,$state,$rootScope){
   //User login function
+  $scope.userinfo = {};
+  $scope.regStatus = false;
   $scope.logout = function()
   {
     $cookies.remove('token');
@@ -7,11 +9,12 @@ app.controller('UserController',['$scope','$mdDialog','$http','$cookies','$state
   }
   $scope.login = function(user)
   {
+    $rootScope.showLinear = true;
     $http.post('/api/v1/login',JSON.stringify(user)).then(function success(data){
-
       $cookies.put('token',data.data.data.token);
-      $scope.isloggedin = true;
-      //$mdDialog.cancel();
+      $rootScope.userinfo = data.data.data.info;
+      $rootScope.showLinear = false;
+      $mdDialog.cancel();
     },function error(data){
       console.log(data);
     });
@@ -21,23 +24,21 @@ app.controller('UserController',['$scope','$mdDialog','$http','$cookies','$state
   //User registration function
   $scope.register = function(user)
   {
+    $scope.registrationStatus = "";
     $http.post('/api/v1/register',JSON.stringify(user)).then(function success(data){
-      console.log(data);
+      if(data.data.data.register){
+        $scope.registrationStatus = "Registration success";
+        $scope.regStatus = true;
+      }else{
+        $scope.registrationStatus = "Registration failed";
+      }
     },function error(data){
       console.log(data);
     });
   }
-  //Tab dialog open for login and registration
-  $scope.showTabDialog = function(ev) {
-    $mdDialog.show({
-      templateUrl: 'templates/tabDialogLogin.html',
-      parent: angular.element(document.body),
-      targetEvent: ev,
-      clickOutsideToClose:true
-    })
-  };
+
   $scope.gotoHome = function()
   {
-    $state.go('home');
+    $state.go('app.home');
   }
 }]);

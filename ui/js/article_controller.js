@@ -2,11 +2,11 @@ app.controller('ArticleController',['$scope','$http','$mdDialog','$state','$stat
   $scope.name= [];
   $scope.articles = [];
   $scope.commentList = [];
-  AppServices.isLoggedIn().then(function scb(data){
-    $scope.isloggedin = data.data.data.loggedin;
-  },function ecb(data){
-
-  });
+  // AppServices.isLoggedIn().then(function scb(data){
+  //   $scope.isloggedin = data.data.data.loggedin;
+  // },function ecb(data){
+  //
+  // });
   $scope.loaddata = function()
   {
     $http.get("/api/v1/article").then(function success(data){
@@ -15,12 +15,12 @@ app.controller('ArticleController',['$scope','$http','$mdDialog','$state','$stat
 
     });
   }
-  if($state.current.name == "home"){
+  if($state.current.name == "app.home"){
     $scope.loaddata();
   }
   //
   $scope.a_id = null;
-  if($state.current.name == "readArticle"){
+  if($state.current.name == "app.readArticle"){
     $scope.a_id = $stateParams.id;
     $http.get("/api/v1/article/"+$scope.a_id).then(function success(data){
       $scope.result = data.data.data.articles[0];
@@ -46,13 +46,13 @@ app.controller('ArticleController',['$scope','$http','$mdDialog','$state','$stat
   {
     $http.post("/api/v1/article",JSON.stringify(article)).then(function success(data){
       $scope.loaddata();
-      $state.go("home");
+      $state.go("app.home");
     }, function error(){
 
     });
   }
   $scope.newArticle = function() {
-      $state.go('newArticle');
+      $state.go('app.newArticle');
   };
 
 }]);

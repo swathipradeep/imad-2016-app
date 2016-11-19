@@ -1,21 +1,30 @@
 app.config(function($stateProvider,$urlRouterProvider){
-  $urlRouterProvider.otherwise('home');
-  $stateProvider.state('home',{
+  $urlRouterProvider.otherwise('/');
+  $stateProvider.state('app.home',{
     url:'/home',
-    templateUrl:'templates/home.html'
+    templateUrl:'templates/home.html',
+    controller:'ArticleController'
   }).
-  state('articleOne',{
+  state('app.articleOne',{
     url:'/article-one',
     templateUrl:'templates/article.html'
   }).
-  state('readArticle',{
+  state('app.readArticle',{
     url:'/readarticle?id',
     templateUrl:'templates/readarticle.html',
     controller:'ArticleController'
   }).
-  state('newArticle',{
+  state('app.newArticle',{
     url:'/new_article',
     templateUrl:'templates/newArticle.html',
     controller:'ArticleController'
+  }).
+  state('profile',{
+    url:'/',
+    templateUrl:'templates/profile.html'
+  }).
+  state('app',{
+    url:'/app-home',
+    templateUrl:'templates/app-home.html'
   });
 });

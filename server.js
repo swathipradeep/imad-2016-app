@@ -51,7 +51,7 @@ app.post('/api/v1/login',function(req,res){
         });
         response.statusCode = "200";
         response.message = "success";
-        response.data = {"login":true,'token':token}
+        response.data = {"login":true,'token':token,info:result.rows[0]}
         res.send(JSON.stringify(response));
       }else{
         response.statusCode = "400";

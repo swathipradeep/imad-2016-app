@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     <style>
         .name_card {
-            background-color: #78909C;
+            background-color: #3F51B5;
             height: 180px;
         }
 
@@ -16,81 +16,38 @@
         }
 
         .side_nav {
-            background-color: #CFD8DC;
+            background-color: #fff;
+        }
+
+        .main_section {
+            background-image: url('back.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 400px;
+        }
+
+        .main_section > div > h1,h3 {
+            color: #fff;
+            font-family: sans-serif;
+        }
+
+        .img-circle {
+            border-radius: 50%;
+        }
+        .card_title{
+          padding-top: 2px;
+          padding-bottom:5px;
+          padding-left:15px
         }
     </style>
 </head>
 
 <body ng-app="MyApp">
-    <div layout="column" flex style="height:99%"  ng-controller="MainController">
-        <section layout="row" flex>
-            <md-sidenav class="md-sidenav-left side_nav" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
-                <div layout="column" layout-align="center center" class="name_card">
-                    <p style="color:#fff">
-                        Swathi Pradeep
-                    </p>
-                    <span style="color:#fff">swathipradeep369@gmail.com</span>
-                </div>
-                <md-content class="side_nav" layout-padding>
-                    <md-button class="md-primary" ui-sref="home">About Me</md-button>
-                    <md-button class="md-primary" ng-click="readArticle()">Read</md-button>
-                    <!-- <md-list-item ng-repeat="article in articles">
-                        <a ui-sref="{{article.url}}"> {{ article.name }} </a>
-                    </md-list-item> -->
-                </md-content>
+    <div layout="row" ui-view flex style="height:99%">
 
-            </md-sidenav>
-            <div layout="column" flex>
-                <div class="" ng-controller="UserController">
-                    <md-toolbar>
-                        <div class="md-toolbar-tools">
-                             <md-button class="md-icon-button" aria-label="Home" ng-click="gotoHome()">
-                                <md-icon md-svg-icon="images/icons/ic_home_white_24px.svg"></md-icon>
-                            </md-button>
-
-                            <span flex></span>
-                            <!--
-                            <md-button class="md-icon-button" aria-label="Favorite">
-                                <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
-                            </md-button> -->
-                            <md-button ng-show="isloggedin" class="md-icon-button" aria-label="Login" ng-click="logout()">
-                                <md-icon md-svg-icon="images/icons/ic_exit_to_app_white_24px.svg">Logout</md-icon>
-                            </md-button>
-                            {{isloggedin}}
-                            <md-button ng-hide="isloggedin" class="md-icon-button" aria-label="Login" ng-click="showTabDialog($event)">
-                                <md-icon md-svg-icon="images/icons/ic_person_pin_white_24px.svg">Login</md-icon>
-                            </md-button>
-                        </div>
-                    </md-toolbar>
-                </div>
-                <div layout="row" ui-view flex>
-
-                </div>
-                <div layout="row" layout-align="end center" ng-controller="ArticleController">
-                    <md-fab-speed-dial>
-                        <md-fab-trigger>
-                            <md-button ng-click="newArticle()" aria-label="menu" class="md-fab md-warn">
-                                <md-icon md-svg-src="images/icons/ic_add_white_24px.svg"></md-icon>
-                            </md-button>
-                        </md-fab-trigger>
-
-                        <!-- <md-fab-actions>
-                        <md-button aria-label="Twitter" class="md-fab md-raised md-mini">
-                            <md-icon md-svg-src="img/icons/twitter.svg" aria-label="Twitter"></md-icon>
-                        </md-button>
-                        <md-button aria-label="Facebook" class="md-fab md-raised md-mini">
-                            <md-icon md-svg-src="img/icons/facebook.svg" aria-label="Facebook"></md-icon>
-                        </md-button>
-                        <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
-                            <md-icon md-svg-src="img/icons/hangout.svg" aria-label="Google Hangout"></md-icon>
-                        </md-button>
-                    </md-fab-actions> -->
-                    </md-fab-speed-dial>
-                </div>
-            </div>
-
-        </section>
     </div>
+    <!-- <ui-view>
+  </ui-view> -->
     <!-- Angular Material requires Angular.js Libraries -->
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>

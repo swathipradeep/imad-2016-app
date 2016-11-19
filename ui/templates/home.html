@@ -1,10 +1,14 @@
 <md-content class="" flex>
-  <div layout="column" layout-align="center center" ng-controller="ArticleController">
+  <div layout="column" layout-align="center center">
+    <md-input-container>
+      <label>Search article</label>
+      <input type="text" ng-model="searchArticle">
+    </md-input-container>
     <md-list flex class="md-whiteframe-1dp">
-    <md-list-item class="md-3-line" ng-repeat="article in articles">
+    <md-list-item class="md-3-line" ng-repeat="article in articles|filter:searchArticle">
       <img ng-src="images/icons/ic_book_black_48px.svg" class="md-avatar" alt="" />
       <div class="md-list-item-text" layout="column">
-           <h4><a ui-sref="readArticle({id:article.article_id})"> {{ article.title }} </a></h3>
+           <h4><a ui-sref="app.readArticle({id:article.article_id})"> {{ article.title }} </a></h3>
            <h4>{{ article.created_by }}</h4>
            <h4>{{ article.created_date_time }}</h4>
       </div>

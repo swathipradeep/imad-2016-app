@@ -1,0 +1,81 @@
+<div layout="column" flex style="height:99%" ng-controller="MainController">
+    <div ng-show="showLinear" layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+    </div>
+    <section layout="row" flex>
+        <md-sidenav class="md-sidenav-left side_nav" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
+            <div layout="column" layout-align="center center" ng-hide="loggedIn()" class="name_card">
+                <p style="color:#fff">
+                    Swathi Pradeep
+                </p>
+                <span style="color:#fff">swathipradeep369@gmail.com</span>
+            </div>
+            <div layout="column" layout-align="center center"  ng-show="loggedIn()" class="name_card">
+                <p style="color:#fff">
+                  <!-- {{userinfo}} -->
+                    {{userinfo.name}}
+                </p>
+                <span style="color:#fff">{{userinfo.email}}</span>
+            </div>
+            <md-content class="side_nav" layout-padding>
+                <md-icon md-svg-icon="images/icons/ic_face_black_24px.svg"></md-icon>
+                <md-button class="md-primary" ui-sref="profile">Swathi's Profile</md-button>
+                <!-- <md-list-item ng-repeat="article in articles">
+                    <a ui-sref="{{article.url}}"> {{ article.name }} </a>
+                </md-list-item> -->
+            </md-content>
+
+        </md-sidenav>
+        <div layout="column" flex>
+            <div class="" ng-controller="UserController">
+                <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <md-button hide-gt-md aria-label="Menu" ng-click="openSideNavigation()" class="md-icon-button">
+                            <md-icon md-svg-icon="images/icons/ic_menu_white_24px.svg"></md-icon>
+                        </md-button>
+                        <md-button class="md-icon-button" aria-label="Home" ng-click="gotoHome()">
+                            <md-icon md-svg-icon="images/icons/ic_home_white_24px.svg"></md-icon>
+                        </md-button>
+
+                        <span flex></span>
+                        <!--
+                        <md-button class="md-icon-button" aria-label="Favorite">
+                            <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+                        </md-button> -->
+                        <md-button ng-show="loggedIn()" class="md-icon-button" aria-label="Login" ng-click="logout()">
+                            <md-icon md-svg-icon="images/icons/ic_exit_to_app_white_24px.svg">Logout</md-icon>
+                        </md-button>
+                        <md-button ng-hide="loggedIn()" class="md-icon-button" aria-label="Login" ng-click="showTabDialog($event)">
+                            <md-icon md-svg-icon="images/icons/ic_person_pin_white_24px.svg">Login</md-icon>
+                        </md-button>
+                    </div>
+                </md-toolbar>
+            </div>
+            <div layout="row" ui-view flex>
+
+            </div>
+            <div layout="row" layout-align="end center" ng-controller="ArticleController">
+                <md-fab-speed-dial>
+                    <md-fab-trigger>
+                        <md-button ng-click="newArticle()" aria-label="menu" class="md-fab md-warn">
+                            <md-icon md-svg-src="images/icons/ic_add_white_24px.svg"></md-icon>
+                        </md-button>
+                    </md-fab-trigger>
+
+                    <!-- <md-fab-actions>
+                    <md-button aria-label="Twitter" class="md-fab md-raised md-mini">
+                        <md-icon md-svg-src="img/icons/twitter.svg" aria-label="Twitter"></md-icon>
+                    </md-button>
+                    <md-button aria-label="Facebook" class="md-fab md-raised md-mini">
+                        <md-icon md-svg-src="img/icons/facebook.svg" aria-label="Facebook"></md-icon>
+                    </md-button>
+                    <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
+                        <md-icon md-svg-src="img/icons/hangout.svg" aria-label="Google Hangout"></md-icon>
+                    </md-button>
+                </md-fab-actions> -->
+                </md-fab-speed-dial>
+            </div>
+        </div>
+
+    </section>
+</div>
