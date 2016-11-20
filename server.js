@@ -15,9 +15,9 @@ app.use(bodyParser.json());
 //Database config
 var config = {
   host: 'localhost',
-  user: 'postgres',
-  password: 'swathi',
-  database: 'my_app',
+  user: 'swathipradeep',
+  password: process.env.DB_PASSWORD,
+  database: 'swathipradeep',
   port:'5432'
 };
 var appSecret = "1234sddff4DDffffK";
@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname,'ui')));
 app.post('/api/v1/login',function(req,res){
   let email = req.body.email;
   let password = req.body.password;
-  pool.query('SELECT * FROM testapp.user where email=$1',[email],function(err,result){
+  pool.query('SELECT * FROM public.user where email=$1',[email],function(err,result){
     if(err){
       response.statusCode = "400";
       response.message = "failed";
@@ -66,7 +66,7 @@ app.post('/api/v1/register',function(req,res){
   let name = req.body.name;
   let email = req.body.email;
   let password = req.body.password;
-  pool.query('insert into testapp.user values($1,$2,$3)',[name,email,password],function(err,result){
+  pool.query('insert into public.user values($1,$2,$3,$4)',[,email,password,name],function(err,result){
     if (err){
       response.statusCode = "400";
       response.message = "failed";
@@ -81,8 +81,9 @@ app.post('/api/v1/register',function(req,res){
   });
 });
 app.get('/api/v1/article',function(req,res){
-  pool.query("select * from testapp.article",function(err,result){
+  pool.query("select public.article.article_id, public.article.title, public.article.content, public.article.created_date_time, public.user.name from public.article inner join public.user on public.article.created_by = public.user.email",function(err,result){
     if(err){
+      console.log(err);
       response.statusCode = "400";
       response.message = "failed";
       response.data = {"message":"Something went wrong please try again."}
@@ -99,14 +100,14 @@ app.get('/api/v1/article',function(req,res){
 //Article API's
 app.get('/api/v1/article/:id',function(req,res){
   var id= req.params.id;
-  pool.query("select * from testapp.article where article_id=$1",[id],function(err,result){
+  pool.query("select * from public.article where article_id=$1",[id],function(err,result){
     if(err){
       response.statusCode = "400";
       response.message = "failed";
       response.data = {"message":"Something went wrong please try again."}
       res.send(JSON.stringify(response));
     }else{
-      pool.query("select * from testapp.comments where article_id=$1",[id],function(err,re){
+      pool.query("select * from public.comments where article_id=$1",[id],function(err,re){
         if(err){
 
         }else{
@@ -152,9 +153,11 @@ app.get('/api/v1/verifyuser',function(req,res){
   }
 });
 app.post('/api/v1/article/comment',function(req,res){
+  let email = req.body.email;
+  console.log(email);
   let comment= req.body.comment;
   let a_id = req.body.article_id;
-  pool.query("insert into testapp.comments values($1,$2,$3)",[,comment,a_id],function(err,result){
+  pool.query("insert into public.comments values($1,$2,$3,$4)",[,a_id,comment,email],function(err,result){
     if(err){
       console.log(err);
       response.statusCode = "400";
@@ -174,7 +177,7 @@ app.post('/api/v1/article',function(req,res){
   let title = req.body.title;
   let content = req.body.content;
   console.log(moment().format("MMM Do YY"));
-  pool.query("insert into testapp.article values($1,$2,$3,$4,$5)",[1,title,content,email,moment().format("MMM Do YY")],function(err,result){
+  pool.query("insert into public.article values($1,$2,$3,$4,$5)",[,email,title,moment().format("MMM Do YY"),content],function(err,result){
     if(err){
       response.statusCode = "400";
       response.message = "failed";

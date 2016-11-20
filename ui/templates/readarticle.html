@@ -12,13 +12,15 @@
   <ul>
     <li ng-repeat="cmt in commentList">{{cmt.comment}}</li>
   </ul>
-<md-input-container>
-  <label>Add comment</label>
-  <input type="text" ng-model="comment" value="">
-</md-input-container>
-<md-button class="md-primary md-raised" ng-click="addComment()">Submit</md-button>
-<p ng-hide="isloggedin">
-  Please login to comment
-</p>
+  <p style="color:red" ng-hide="loggedIn()">
+    Please login to comment
+  </p>
+  <div class=""  ng-show="loggedIn()">
+    <md-input-container>
+      <label>Add comment</label>
+      <input type="text" ng-model="comment" value="">
+    </md-input-container>
+    <md-button class="md-primary md-raised" ng-click="addComment()">Submit</md-button>
+  </div>
 </md-card>
 </md-content>

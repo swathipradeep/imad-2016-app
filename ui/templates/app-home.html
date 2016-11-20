@@ -5,14 +5,19 @@
     <section layout="row" flex>
         <md-sidenav class="md-sidenav-left side_nav" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
             <div layout="column" layout-align="center center" ng-hide="loggedIn()" class="name_card">
+                <div layout="row">
+                    <md-icon md-svg-icon="images/icons/ic_face_white_24px.svg"></md-icon>
+                </div>
                 <p style="color:#fff">
                     Swathi Pradeep
                 </p>
                 <span style="color:#fff">swathipradeep369@gmail.com</span>
             </div>
-            <div layout="column" layout-align="center center"  ng-show="loggedIn()" class="name_card">
+            <div layout="column" layout-align="center center" ng-show="loggedIn()" class="name_card">
+                <div layout="row">
+                    <md-icon md-svg-icon="images/icons/ic_face_white_24px.svg"></md-icon>
+                </div>
                 <p style="color:#fff">
-                  <!-- {{userinfo}} -->
                     {{userinfo.name}}
                 </p>
                 <span style="color:#fff">{{userinfo.email}}</span>
@@ -28,13 +33,13 @@
         </md-sidenav>
         <div layout="column" flex>
             <div class="" ng-controller="UserController">
-                <md-toolbar>
+                <md-toolbar style="background-color:#fff" class="md-whiteframe-1dp">
                     <div class="md-toolbar-tools">
                         <md-button hide-gt-md aria-label="Menu" ng-click="openSideNavigation()" class="md-icon-button">
-                            <md-icon md-svg-icon="images/icons/ic_menu_white_24px.svg"></md-icon>
+                            <md-icon md-svg-icon="images/icons/ic_menu_black_24px.svg"></md-icon>
                         </md-button>
                         <md-button class="md-icon-button" aria-label="Home" ng-click="gotoHome()">
-                            <md-icon md-svg-icon="images/icons/ic_home_white_24px.svg"></md-icon>
+                            <md-icon md-svg-icon="images/icons/ic_home_black_24px.svg"></md-icon>
                         </md-button>
 
                         <span flex></span>
@@ -43,10 +48,10 @@
                             <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
                         </md-button> -->
                         <md-button ng-show="loggedIn()" class="md-icon-button" aria-label="Login" ng-click="logout()">
-                            <md-icon md-svg-icon="images/icons/ic_exit_to_app_white_24px.svg">Logout</md-icon>
+                            <md-icon md-svg-icon="images/icons/ic_exit_to_app_black_24px.svg">Logout</md-icon>
                         </md-button>
                         <md-button ng-hide="loggedIn()" class="md-icon-button" aria-label="Login" ng-click="showTabDialog($event)">
-                            <md-icon md-svg-icon="images/icons/ic_person_pin_white_24px.svg">Login</md-icon>
+                            <md-icon md-svg-icon="images/icons/ic_person_pin_black_24px.svg">Login</md-icon>
                         </md-button>
                     </div>
                 </md-toolbar>
@@ -57,7 +62,7 @@
             <div layout="row" layout-align="end center" ng-controller="ArticleController">
                 <md-fab-speed-dial>
                     <md-fab-trigger>
-                        <md-button ng-click="newArticle()" aria-label="menu" class="md-fab md-warn">
+                        <md-button ng-click="newArticle()" aria-label="menu" class="md-fab">
                             <md-icon md-svg-src="images/icons/ic_add_white_24px.svg"></md-icon>
                         </md-button>
                     </md-fab-trigger>
