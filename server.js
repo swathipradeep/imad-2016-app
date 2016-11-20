@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 //Database config
 var config = {
-  host: 'localhost',
+  host: 'db.imad.hasura-app.io',
   user: 'swathipradeep',
   password: process.env.DB_PASSWORD,
   database: 'swathipradeep',
