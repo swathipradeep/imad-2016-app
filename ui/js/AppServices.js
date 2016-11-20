@@ -8,7 +8,7 @@ app.factory('AppServices',['$http','$cookies',function($http,$cookies){
     // return $http.get('/api/v1/verifyuser').then(function success(data){
     //   return data;
     // });
-    if($cookies.get('token')){
+    if(localStorage.getItem('email')){
       return true;
     }else{
       return false;

@@ -34,7 +34,8 @@ app.controller('ArticleController',['$scope','$http','$mdDialog','$state','$stat
   //Add comment
   $scope.addComment = function()
   {
-    $http.post("/api/v1/article/comment",JSON.stringify({'comment':$scope.comment,'article_id':$scope.a_id})).then(function success(data){
+    var email= localStorage.getItem("email");
+    $http.post("/api/v1/article/comment",JSON.stringify({'comment':$scope.comment,'article_id':$scope.a_id,'email':email})).then(function success(data){
       $scope.result = data.data.data;
       $scope.cmt = {"comment":$scope.comment};
       $scope.commentList.push($scope.cmt);
@@ -44,6 +45,8 @@ app.controller('ArticleController',['$scope','$http','$mdDialog','$state','$stat
   }
   $scope.saveArticle = function(article)
   {
+    var email = localStorage.getItem("email");
+    article.email = email;
     $http.post("/api/v1/article",JSON.stringify(article)).then(function success(data){
       $scope.loaddata();
       $state.go("app.home");

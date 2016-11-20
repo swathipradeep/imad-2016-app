@@ -7,7 +7,7 @@ var app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 
-//Database config
+Database config
 var config = {
   host: 'db.imad.hasura-app.io',
   user: 'swathipradeep',
@@ -15,6 +15,13 @@ var config = {
   database: 'swathipradeep',
   port:'5432'
 };
+// var config = {
+//   host: 'localhost',
+//   user: 'postgres',
+//   password: 'swathi',
+//   database: 'my_app',
+//   port:'5432'
+// };
 var appSecret = "1234sddff4DDffffK";
 var pool = new Pool(config);
 // app.get('/', function (req, res) {
@@ -46,7 +53,7 @@ app.post('/api/v1/login',function(req,res){
         // });
         response.statusCode = "200";
         response.message = "success";
-        response.data = {"login":true,'token':result.rows[0].email,info:result.rows[0].email}
+        response.data = {"login":true,'token':result.rows[0].email,"name":result.rows[0].name}
         res.send(JSON.stringify(response));
       }else{
         response.statusCode = "400";
@@ -120,9 +127,7 @@ app.get('/api/v1/article/:id',function(req,res){
 });
 app.use(function verifyToken(req,res,next)
 {
-  var tok = req.headers.cookie.token;
-  var result = tok.split("=");
-  var email = res[1];
+  var email = req.body.email;
   //var email = req.cookies['token'];
   // jwt.verify(token, appSecret, function(err, decoded) {
   //    if (err) {
@@ -147,7 +152,6 @@ app.use(function verifyToken(req,res,next)
       }
       res.send(JSON.stringify(response));
     }else{
-        req.body.email = email
         next();
     }
   });

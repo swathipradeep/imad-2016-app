@@ -1,18 +1,19 @@
 app.controller('UserController',['$scope','$mdDialog','$http','$cookies','$state','$rootScope',function($scope,$mdDialog,$http,$cookies,$state,$rootScope){
   //User login function
-  $scope.userinfo = {};
+  $rootScope.userinfo = {};
   $scope.regStatus = false;
   $scope.logout = function()
   {
-    $cookies.remove('token');
+    localStorage.clear();
     $scope.isloggedin = false;
   }
   $scope.login = function(user)
   {
     $rootScope.showLinear = true;
     $http.post('/api/v1/login',JSON.stringify(user)).then(function success(data){
-      $cookies.put('token',data.data.data.token);
-      $rootScope.userinfo = data.data.data.info;
+      localStorage.setItem("email",data.data.data.token)
+      $rootScope.userinfo.name = data.data.data.name;
+      $rootScope.userinfo.email = data.data.data.token;
       $rootScope.showLinear = false;
       $mdDialog.cancel();
     },function error(data){
