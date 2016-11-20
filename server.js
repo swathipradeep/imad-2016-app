@@ -188,7 +188,7 @@ app.post('/api/v1/article',function(req,res){
   var title = req.body.title;
   var content = req.body.content;
   var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-  pool.query('insert into public.article ("created_by","title","created_date_time","content") values ($1,$2,$3,$4)',[,email,title,date,content],function(err,result){
+  pool.query('insert into public.article ("created_by","title","created_date_time","content") values ($1,$2,$3,$4)',[email,title,date,content],function(err,result){
     if(err){
         console.log(err);
       response.statusCode = "400";
