@@ -31,8 +31,8 @@ var response = {};
 app.use(express.static(path.join(__dirname,'ui')));
 //User registration and login
 app.post('/api/v1/login',function(req,res){
-  let email = req.body.email;
-  let password = req.body.password;
+  var email = req.body.email;
+  var password = req.body.password;
   pool.query('SELECT * FROM public.user where email=$1',[email],function(err,result){
     if(err){
       response.statusCode = "400";
@@ -63,9 +63,9 @@ app.post('/api/v1/login',function(req,res){
   })
 });
 app.post('/api/v1/register',function(req,res){
-  let name = req.body.name;
-  let email = req.body.email;
-  let password = req.body.password;
+  var name = req.body.name;
+  var email = req.body.email;
+  var password = req.body.password;
   pool.query('insert into public.user values($1,$2,$3,$4)',[,email,password,name],function(err,result){
     if (err){
       response.statusCode = "400";
@@ -124,7 +124,7 @@ app.get('/api/v1/article/:id',function(req,res){
 });
 app.use(function verifyToken(req,res,next)
 {
-  let token = req.cookies['token'];
+  var token = req.cookies['token'];
   jwt.verify(token, appSecret, function(err, decoded) {
      if (err) {
        response.statusCode = "400";
@@ -153,10 +153,10 @@ app.get('/api/v1/verifyuser',function(req,res){
   }
 });
 app.post('/api/v1/article/comment',function(req,res){
-  let email = req.body.email;
+  var email = req.body.email;
   console.log(email);
-  let comment= req.body.comment;
-  let a_id = req.body.article_id;
+  var comment= req.body.comment;
+  var a_id = req.body.article_id;
   pool.query("insert into public.comments values($1,$2,$3,$4)",[,a_id,comment,email],function(err,result){
     if(err){
       console.log(err);
@@ -173,9 +173,9 @@ app.post('/api/v1/article/comment',function(req,res){
   })
 });
 app.post('/api/v1/article',function(req,res){
-  let email = req.body.email;
-  let title = req.body.title;
-  let content = req.body.content;
+  var email = req.body.email;
+  var title = req.body.title;
+  var content = req.body.content;
   console.log(moment().format("MMM Do YY"));
   pool.query("insert into public.article values($1,$2,$3,$4,$5)",[,email,title,moment().format("MMM Do YY"),content],function(err,result){
     if(err){
