@@ -2,6 +2,8 @@ app.controller('UserController',['$scope','$mdDialog','$http','$cookies','$state
   //User login function
   $rootScope.userinfo = {};
   $scope.regStatus = false;
+  $scope.lStatus = false;
+  $scope.loginStatus = "Login failed!"
   $scope.logout = function()
   {
     localStorage.clear();
@@ -11,11 +13,16 @@ app.controller('UserController',['$scope','$mdDialog','$http','$cookies','$state
   {
     $rootScope.showLinear = true;
     $http.post('/api/v1/login',JSON.stringify(user)).then(function success(data){
-      localStorage.setItem("email",data.data.data.token)
-      $rootScope.userinfo.name = data.data.data.name;
-      $rootScope.userinfo.email = data.data.data.token;
+      if(data.data.data.login){
+        localStorage.setItem("email",data.data.data.token)
+        $rootScope.userinfo.name = data.data.data.name;
+        $rootScope.userinfo.email = data.data.data.token;
+        $mdDialog.cancel();
+      }else{
+        $scope.loginStatus=data.data.data.message;
+        $scope.lStatus = true;
+      }
       $rootScope.showLinear = false;
-      $mdDialog.cancel();
     },function error(data){
       console.log(data);
     });

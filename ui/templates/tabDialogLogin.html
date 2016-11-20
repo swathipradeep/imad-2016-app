@@ -12,6 +12,7 @@
               <label for="Password">Password</label>
               <input type="password" ng-model="user.password" name="password" value="">
             </md-input-container>
+            <p style="color:red" ng-show="lStatus">{{loginStatus}}</p>
             <md-button class="md-raised md-primary" ng-click="login(user)">Login</md-button>
           </md-content>
         </md-tab>

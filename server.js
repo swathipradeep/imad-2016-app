@@ -45,22 +45,33 @@ app.post('/api/v1/login',function(req,res){
       }
       res.send(JSON.stringify(response));
     }else{
-      if(result.rows[0].password == password){
-        //JWT implementation
-        // console.log(result.rows[0]);
-        // var token = jwt.sign(result.rows[0],appSecret, {
-        //     expiresIn : 1440 // expires in 24 hours
-        // });
-        response.statusCode = "200";
-        response.message = "success";
-        response.data = {"login":true,'token':result.rows[0].email,"name":result.rows[0].name}
-        res.send(JSON.stringify(response));
+      if(result.rows[0]){
+        if(result.rows[0].password == password){
+          //JWT implementation
+          // console.log(result.rows[0]);
+          // var token = jwt.sign(result.rows[0],appSecret, {
+          //     expiresIn : 1440 // expires in 24 hours
+          // });
+          response.statusCode = "200";
+          response.message = "success";
+          response.data = {"login":true,'token':result.rows[0].email,"name":result.rows[0].name}
+          res.send(JSON.stringify(response));
+        }else{
+          response.statusCode = "400";
+          response.message = "success";
+          response.data = {"login":false,"message":"Incorrect password"}
+          res.send(JSON.stringify(response));
+        }
       }else{
         response.statusCode = "400";
-        response.message = "success";
-        response.data = {"login":false,"message":"Incorrect password"}
+        response.message = "failed";
+        response.data = {
+          "login":false,
+          "message":"User Does not exist"
+        }
         res.send(JSON.stringify(response));
       }
+
     }
   })
 });
