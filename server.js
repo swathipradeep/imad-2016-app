@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname,'ui')));
 app.post('/api/v1/login',function(req,res){
   var email = req.body.email;
   var password = req.body.password;
-  pool.query('SELECT * FROM public.user where email=$1',[email],function(err,result){
+  pool.query('SELECT * FROM public.users where email=$1',[email],function(err,result){
     if(err){
       response.statusCode = "400";
       response.message = "failed";
