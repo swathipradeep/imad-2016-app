@@ -4,11 +4,11 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var Pool =  require('pg').Pool;
 var jwt = require('jsonwebtoken');
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
 var moment = require('moment');
 
 var app = express();
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 
