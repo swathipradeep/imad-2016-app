@@ -63,6 +63,7 @@ app.post('/api/v1/register',function(req,res){
   var password = req.body.password;
   pool.query('insert into public.users values($1,$2,$3,$4)',[,email,password,name],function(err,result){
     if (err){
+        console.log(err);
       response.statusCode = "400";
       response.message = "failed";
       response.data = {"register":false}
