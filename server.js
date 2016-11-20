@@ -120,7 +120,9 @@ app.get('/api/v1/article/:id',function(req,res){
 });
 app.use(function verifyToken(req,res,next)
 {
-  var email = req.headers.cookie;
+  var token = req.headers.cookie;
+  var result = email.split("=");
+  var email = res[1];
   //var email = req.cookies['token'];
   // jwt.verify(token, appSecret, function(err, decoded) {
   //    if (err) {
@@ -135,7 +137,7 @@ app.use(function verifyToken(req,res,next)
   //      next();
   //    }
   //  });
-  pool.query('SELECT * FROM public.users where email=$1',[email],function(err,result){
+  pool.query('SELECT * FROM public.users where email=$1',[email,function(err,result){
     if(err){
       response.statusCode = "400";
       response.message = "failed";
