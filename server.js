@@ -121,7 +121,7 @@ app.get('/api/v1/article/:id',function(req,res){
 app.use(function verifyToken(req,res,next)
 {
   var token = req.headers.cookie;
-  var result = email.split("=");
+  var result = token.split("=");
   var email = res[1];
   //var email = req.cookies['token'];
   // jwt.verify(token, appSecret, function(err, decoded) {
