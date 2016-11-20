@@ -3,7 +3,6 @@ var morgan = require('morgan');
 var path = require('path');
 var bodyParser = require('body-parser');
 var Pool =  require('pg').Pool;
-var jwt = require('jsonwebtoken');
 var cookieParser = require('cookie-parser');
 var moment = require('moment');
 
@@ -15,9 +14,9 @@ app.use(bodyParser.json());
 //Database config
 var config = {
   host: 'localhost',
-  user: 'swathipradeep',
-  password: process.env.DB_PASSWORD,
-  database: 'swathipradeep',
+  user: 'postgres',
+  password: 'swathi',
+  database: 'my_app',
   port:'5432'
 };
 var appSecret = "1234sddff4DDffffK";
@@ -33,7 +32,7 @@ app.use(express.static(path.join(__dirname,'ui')));
 app.post('/api/v1/login',function(req,res){
   var email = req.body.email;
   var password = req.body.password;
-  pool.query('SELECT * FROM public.user where email=$1',[email],function(err,result){
+  pool.query('SELECT * FROM testapp.user where email=$1',[email],function(err,result){
     if(err){
       response.statusCode = "400";
       response.message = "failed";
@@ -45,13 +44,13 @@ app.post('/api/v1/login',function(req,res){
     }else{
       if(result.rows[0].password == password){
         //JWT implementation
-        console.log(result.rows[0]);
-        var token = jwt.sign(result.rows[0],appSecret, {
-            expiresIn : 1440 // expires in 24 hours
-        });
+        // console.log(result.rows[0]);
+        // var token = jwt.sign(result.rows[0],appSecret, {
+        //     expiresIn : 1440 // expires in 24 hours
+        // });
         response.statusCode = "200";
         response.message = "success";
-        response.data = {"login":true,'token':token,info:result.rows[0]}
+        response.data = {"login":true,'token':result.rows[0].email,info:result.rows[0].email}
         res.send(JSON.stringify(response));
       }else{
         response.statusCode = "400";
@@ -66,7 +65,7 @@ app.post('/api/v1/register',function(req,res){
   var name = req.body.name;
   var email = req.body.email;
   var password = req.body.password;
-  pool.query('insert into public.user values($1,$2,$3,$4)',[,email,password,name],function(err,result){
+  pool.query('insert into testapp.user values($1,$2,$3,$4)',[,email,password,name],function(err,result){
     if (err){
       response.statusCode = "400";
       response.message = "failed";
@@ -81,7 +80,7 @@ app.post('/api/v1/register',function(req,res){
   });
 });
 app.get('/api/v1/article',function(req,res){
-  pool.query("select public.article.article_id, public.article.title, public.article.content, public.article.created_date_time, public.user.name from public.article inner join public.user on public.article.created_by = public.user.email",function(err,result){
+  pool.query("select testapp.article.article_id, testapp.article.title, testapp.article.content, testapp.article.created_date_time, testapp.user.name from testapp.article inner join testapp.user on testapp.article.created_by = testapp.user.email",function(err,result){
     if(err){
       console.log(err);
       response.statusCode = "400";
@@ -100,14 +99,14 @@ app.get('/api/v1/article',function(req,res){
 //Article API's
 app.get('/api/v1/article/:id',function(req,res){
   var id= req.params.id;
-  pool.query("select * from public.article where article_id=$1",[id],function(err,result){
+  pool.query("select * from testapp.article where article_id=$1",[id],function(err,result){
     if(err){
       response.statusCode = "400";
       response.message = "failed";
       response.data = {"message":"Something went wrong please try again."}
       res.send(JSON.stringify(response));
     }else{
-      pool.query("select * from public.comments where article_id=$1",[id],function(err,re){
+      pool.query("select * from testapp.comments where article_id=$1",[id],function(err,re){
         if(err){
 
         }else{
@@ -124,20 +123,34 @@ app.get('/api/v1/article/:id',function(req,res){
 });
 app.use(function verifyToken(req,res,next)
 {
-  var token = req.cookies['token'];
-  jwt.verify(token, appSecret, function(err, decoded) {
-     if (err) {
-       response.statusCode = "400";
-       response.message = "failed to authenticate";
-       response.data = {"loggedin":false}
-       res.send(JSON.stringify(response));
-     } else {
-       // if everything is good, save to request for use in other routes
-       var decoded_token = decoded;
-       req.body.email = decoded_token.email
-       next();
-     }
-   });
+  var email = req.cookies['token'];
+  // jwt.verify(token, appSecret, function(err, decoded) {
+  //    if (err) {
+  //      response.statusCode = "400";
+  //      response.message = "failed to authenticate";
+  //      response.data = {"loggedin":false}
+  //      res.send(JSON.stringify(response));
+  //    } else {
+  //      // if everything is good, save to request for use in other routes
+  //      var decoded_token = decoded;
+  //      req.body.email = decoded_token.email
+  //      next();
+  //    }
+  //  });
+  pool.query('SELECT * FROM testapp.user where email=$1',[email],function(err,result){
+    if(err){
+      response.statusCode = "400";
+      response.message = "failed";
+      response.data = {
+        "login":false,
+        "message":"User Does not exist"
+      }
+      res.send(JSON.stringify(response));
+    }else{
+        req.body.email = email
+        next();
+    }
+  })
 });
 app.get('/api/v1/verifyuser',function(req,res){
   if(req.body.email){
@@ -157,7 +170,7 @@ app.post('/api/v1/article/comment',function(req,res){
   console.log(email);
   var comment= req.body.comment;
   var a_id = req.body.article_id;
-  pool.query("insert into public.comments values($1,$2,$3,$4)",[,a_id,comment,email],function(err,result){
+  pool.query("insert into testapp.comments values($1,$2,$3,$4)",[,a_id,comment,email],function(err,result){
     if(err){
       console.log(err);
       response.statusCode = "400";
@@ -177,7 +190,7 @@ app.post('/api/v1/article',function(req,res){
   var title = req.body.title;
   var content = req.body.content;
   console.log(moment().format("MMM Do YY"));
-  pool.query("insert into public.article values($1,$2,$3,$4,$5)",[,email,title,moment().format("MMM Do YY"),content],function(err,result){
+  pool.query("insert into testapp.article values($1,$2,$3,$4,$5)",[,email,title,moment().format("MMM Do YY"),content],function(err,result){
     if(err){
       response.statusCode = "400";
       response.message = "failed";
