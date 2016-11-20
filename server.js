@@ -151,7 +151,7 @@ app.use(function verifyToken(req,res,next)
         next();
     }
   }]);
-};
+});
 app.get('/api/v1/verifyuser',function(req,res){
   if(req.body.email){
     response.statusCode = "200";
