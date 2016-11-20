@@ -7,7 +7,7 @@ var app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 
-Database config
+//Database config
 var config = {
   host: 'db.imad.hasura-app.io',
   user: 'swathipradeep',
