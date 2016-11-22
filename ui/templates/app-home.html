@@ -48,9 +48,15 @@
                             <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
                         </md-button> -->
                         <md-button ng-show="loggedIn()" class="md-icon-button" aria-label="Login" ng-click="logout()">
+                            <md-tooltip md-direction="left">
+                                Logout
+                            </md-tooltip>
                             <md-icon md-svg-icon="images/icons/ic_exit_to_app_black_24px.svg">Logout</md-icon>
                         </md-button>
                         <md-button ng-hide="loggedIn()" class="md-icon-button" aria-label="Login" ng-click="showTabDialog($event)">
+                            <md-tooltip md-direction="left">
+                                Login
+                            </md-tooltip>
                             <md-icon md-svg-icon="images/icons/ic_person_pin_black_24px.svg">Login</md-icon>
                         </md-button>
                     </div>
@@ -63,6 +69,9 @@
                 <md-fab-speed-dial>
                     <md-fab-trigger>
                         <md-button ng-click="newArticle()" aria-label="menu" class="md-fab">
+                            <md-tooltip md-direction="left">
+                                New article
+                            </md-tooltip>
                             <md-icon md-svg-src="images/icons/ic_add_white_24px.svg"></md-icon>
                         </md-button>
                     </md-fab-trigger>
